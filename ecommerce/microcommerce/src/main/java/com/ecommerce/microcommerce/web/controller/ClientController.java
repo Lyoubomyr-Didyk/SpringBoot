@@ -3,9 +3,12 @@
 package com.ecommerce.microcommerce.web.controller;
 
 import com.ecommerce.microcommerce.web.dao.ClientDao;
+import com.ecommerce.microcommerce.web.exceptions.LicenceException;
 import com.ecommerce.microcommerce.web.model.Client;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestOperations;
+import org.springframework.web.client.RestTemplate;
 
 
 import java.text.ParseException;
@@ -20,8 +23,10 @@ public class ClientController {
 
     private final ClientDao clientDao;
 
+    private RestOperations restTemplate = new RestTemplate();
 
-// 🍋 constructor ----------
+
+// 🍋 ---- constructor ----
 
     public ClientController(ClientDao clientDao){
         this.clientDao = clientDao;
@@ -40,9 +45,12 @@ public class ClientController {
         return clientDao.findById(id);
     }
 
+
     @ApiOperation("Ajoute un nouveau client")
     @PostMapping
     public void addClient(@RequestBody Client client) {
+        exceptionLicence(client);
+
         clientDao.save(client);
     }
 
@@ -61,6 +69,19 @@ public class ClientController {
     }
 
 
+
+// 🍋 ---- methode ----
+
+    public Boolean checkLicense(int licenceNumber){
+        return restTemplate.getForObject( "http://localhost:8081/licenses/" + licenceNumber, Boolean.class);
+    }
+
+    public void exceptionLicence (Client client){
+        int drivingLicence = client.getDrivingLicenceNumber();
+        if(!checkLicense(drivingLicence)){
+            throw new LicenceException("Non valid");
+        }
+    }
 
 
 }

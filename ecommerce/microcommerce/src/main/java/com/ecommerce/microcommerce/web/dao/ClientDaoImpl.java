@@ -33,7 +33,6 @@ public class ClientDaoImpl implements ClientDao{
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date dt = sdf.parse(date);
         return dt;
-
     }
 
     @Override
