@@ -10,7 +10,6 @@ public interface ClientDao {
     Client findById(int id);
     Client save(Client client);
     Client remove(int id);
-
     Client update(int id, Client client);
 
 }

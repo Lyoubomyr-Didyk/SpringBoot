@@ -46,12 +46,14 @@ public class ClientController {
         clientDao.save(client);
     }
 
+    @ApiOperation("Supprime le client par son ID")
     @DeleteMapping("/{id}")
     public Client deleteClient(@PathVariable int id){
-
-        return clientDao.remove(id);
+        Client deleteClient = clientDao.remove(id);
+        return deleteClient;
     }
 
+    @ApiOperation("Modifie un nouveau client par son ID")
     @PutMapping("/{id}")
     public Client updateClient(@PathVariable int id,@RequestBody Client client){
         Client updateClient = clientDao.update(id, client);

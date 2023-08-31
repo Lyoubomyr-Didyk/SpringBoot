@@ -5,6 +5,7 @@
 package com.ecommerce.microcommerce.web.dao;
 
 import com.ecommerce.microcommerce.web.model.Client;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import java.text.ParseException;
@@ -58,7 +59,11 @@ public class ClientDaoImpl implements ClientDao{
 
     @Override
     public Client remove(int id) {
-        return null;
+        Client removeClient = findById(id);
+        if(removeClient != null){
+            clients.remove(removeClient);
+        }
+        return removeClient;
     }
 
     @Override
@@ -72,7 +77,5 @@ public class ClientDaoImpl implements ClientDao{
         }
         return clientUpdate;
     }
-
-
 
 }
