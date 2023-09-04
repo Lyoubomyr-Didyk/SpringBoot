@@ -2,7 +2,20 @@ package com.ecommerce.microcommerce.web.model;
 
 import java.util.Date;
 
+
+import com.fasterxml.jackson.annotation.JsonFilter;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+
+// @JsonFilter("monFiltreDynamique")  // commenter pour pouvoir utiliser les autres méthodes qui n'ont pas de filtres
+@Entity
 public class Client {
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
     private String firstName;
     private String lastName;
@@ -24,6 +37,8 @@ public class Client {
 
 
     //  🥎 -------- constructor ----------
+
+    public Client(){};
 
     public Client (int id, String firstName, String lastName, Date dateBirth, int drivingLicenceNumber){
 
